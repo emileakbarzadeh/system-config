@@ -8,9 +8,8 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
+    inputs.self.nixosModules.impermanence
   ];
-
-  system.impermanence.enable = true;
 
   ### Set boot options
   boot = {

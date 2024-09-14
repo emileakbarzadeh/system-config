@@ -1,4 +1,40 @@
+
+{ inputs, lib, pkgs, config, ... }:
 {
+  imports = [
+    inputs.disko.nixosModules.disko
+  ];
+
+  environment.systemPackages = with pkgs; [
+    # `statfs` for btrfs commands
+    gocryptfs
+  ];
+
+  # If on installer
+  disko.enableConfig = true;
+
+  # `head -c 8 /etc/machine-id`
+  networking.hostId = "92121e5c";
+
+  # NOTE: needed for mounting `/key` (for LUKS)
+  boot.initrd.kernelModules = [
+    "uas"
+    "ext4"
+  ];
+
+  # HACK: for troubleshooting
+  # see https://github.com/NixOS/nixpkgs/blob/9d6655c6222211adada5eeec4a91cb255b50dcb6/nixos/modules/system/boot/stage-1-init.sh#L45-L49
+  boot.initrd.preFailCommands = ''
+    export allowShell=1
+  '';
+
+  # NOTE: doesn't get mounted early enough, see below
+  # fileSystems."/key" = {
+  #   device = "/dev/disk/by-partlabel/key";
+  #   fsType = "ext4";
+  #   neededForBoot = true;
+  # };
+  
   disko.devices = {
     nodev."/" = {
       fsType = "tmpfs";

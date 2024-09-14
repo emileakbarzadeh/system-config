@@ -90,7 +90,7 @@
     userEmail = "conroy@dromeda.com.au";
   };
 
-  conroy = {
+  reo101 = {
     shell = {
       enable = true;
       direnv = true;
