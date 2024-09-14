@@ -143,7 +143,15 @@
   };
 
   ### Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      # Forbid root login through SSH.
+      PermitRootLogin = "no";
+      # Use keys only. Remove if you want to SSH using password (not recommended)
+      PasswordAuthentication = false;
+    };
+  };
 
   ### Enable CUPS to print documents.
   services.printing.enable = true;
@@ -177,6 +185,9 @@
   ### Define a user account. Don't forget to set a password with `passwd`.
   users.users.conroy = {
     isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKvtQAUGvh3UmjM7blBM86VItgYD+22HYKzCBrXDsFGB"
+    ];
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "docker" ];
   };
