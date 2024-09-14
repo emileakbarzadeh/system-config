@@ -15,7 +15,7 @@
   user.shell = "${pkgs.zsh}/bin/zsh";
 
   # Read the changelog before changing this value
-  system.stateVersion = "22.11";
+  system.stateVersion = "24.05";
 
   nix.extraOptions = ''
     experimental-features = nix-command flakes recursive-nix

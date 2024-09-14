@@ -1,3 +1,4 @@
+result
 /.direnv/
 /secrets/*key*
 !/secrets/*.age

@@ -6,9 +6,11 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./disko.nix
   ];
+
+  system.impermanence.enable = true;
 
   ### Set boot options
   boot = {
@@ -27,26 +29,16 @@
       ];
     };
 
-    # Clean temporary directory on boot
-    tmp = {
-      cleanOnBoot = true;
-    };
-
-    # Enable support for nfs and ntfs
-    supportedFilesystems = [
-      "cifs"
-      "ntfs"
-      "nfs"
-    ];
+    supportedFilesystems = lib.mkForce ["btrfs"];
   };
 
-  networking.hostName = "homix"; # Define your hostname.
+  networking.hostName = "kombu"; # Define your hostname.
   ### Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   ### Set your time zone.
-  time.timeZone = "Europe/Sofia";
+  time.timeZone = "Australia/Melbourne";
 
   ### Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -79,16 +71,14 @@
     settings = {
       trusted-users = [
         "root"
-        "reo101"
+        "conroy"
       ];
 
-      # Add nix-community and rix101 cachix caches
+      # Add nix-community cachix cache
       substituters = [
-        "https://rix101.cachix.org"
         "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
-        "rix101.cachix.org-1:2u9ZGi93zY3hJXQyoHkNBZpJK+GiXQyYf9J5TLzCpFY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
@@ -97,18 +87,7 @@
   ### Fonts
   fonts.fontconfig.enable = true;
 
-  ### NVIDIA
-  services.xserver = {
-    videoDrivers = [ "nvidia" ];
-  };
   hardware.graphics.enable = true;
-  hardware.nvidia = {
-    open = true;
-    # powerManagement.enable = true;
-    modesetting.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
   environment.sessionVariables = {
     "_JAVA_AWT_WM_NONREPARENTING" = "1";
     "LIBVA_DRIVER_NAME" = "nvidia";
@@ -166,7 +145,7 @@
   services.openssh.enable = true;
 
   ### Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   ### Enable sound.
   security.rtkit.enable = true;
@@ -195,7 +174,7 @@
   virtualisation.docker.enable = true;
 
   ### Define a user account. Don't forget to set a password with `passwd`.
-  users.users.reo101 = {
+  users.users.conroy = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "docker" ];
@@ -221,11 +200,6 @@
     git
   ];
 
-  ### Jellyfin
-  reo101.jellyfin = {
-    enable = true;
-  };
-
   ### Transmission
   services.transmission = {
     enable = true;
@@ -244,5 +218,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
