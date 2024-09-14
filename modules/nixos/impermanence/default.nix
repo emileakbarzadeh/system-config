@@ -3,12 +3,15 @@
   lib,
   ...
 }:
-with lib;
-with lib.nixicle; let
+with lib; let
   cfg = config.system.impermanence;
 in {
   options.system.impermanence = with types; {
-    enable = mkBoolOpt false "Enable impermanence";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable impermanence";
+    };
   };
 
   config = mkIf cfg.enable {
