@@ -101,7 +101,11 @@ let
         ./agenix-rekey
         # Sane default `networking.hostName`
         {
-          networking.hostName = lib.mkDefault meta.hostname;
+          networking.hostName =
+            lib.mkDefault builtins.trace "Default hostname set to ${meta.hostname}"
+              meta.hostname;
+          networking.computerName = meta.hostname;
+          system.defaults.smb.NetBIOSName = meta.hostname;
         }
         # TODO: lib.optionals
       ] ++ (builtins.attrValues config.flake.${configuration-type-to-outputs-modules "nixos"});
@@ -147,9 +151,20 @@ let
       modules = [
         # Main configuration
         "${root}/configuration.nix"
+
         # Home Manager
         inputs.home-manager.darwinModules.home-manager
         (homeManagerModule args)
+
+        # Default `networking.hostName`
+        {
+          networking.hostName =
+            builtins.trace "Default hostname set to ${meta.hostname}" lib.mkDefault
+              meta.hostname;
+          networking.computerName = lib.mkDefault meta.hostname;
+          system.defaults.smb.NetBIOSName = lib.mkDefault meta.hostname;
+        }
+
       ] ++ (builtins.attrValues config.flake.${configuration-type-to-outputs-modules "nix-darwin"});
 
       specialArgs = {

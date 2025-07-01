@@ -67,6 +67,13 @@
                           type = types.str;
                           default = "${kebabToCamel name}Modules";
                         };
+                        allowsNixosOptions = lib.mkOption {
+                          description = ''
+                            Allow common NixOS options to be added to the module
+                          '';
+                          type = types.bool;
+                          default = true;
+                        };
                         resultModules = lib.mkOption {
                           description = ''
                             The resulting automatic packages
@@ -75,7 +82,13 @@
                           type = types.unspecified;
                           readOnly = true;
                           internal = true;
-                          default = lib.optionalAttrs enable (createModules dir);
+                          default = lib.optionalAttrs enable (
+                            (createModules dir)
+                            # Add modules from the common directory when `allowsNixosOptions` is true
+                            // lib.optionalAttrs moduleTypeSubmodule.config.allowsNixosOptions (
+                              createModules "${baseDir}/common"
+                            )
+                          );
                         };
                       };
                     }
@@ -88,8 +101,12 @@
                   nix-darwin = {
                     modulesName = "darwinModules";
                   };
-                  home-manager = { };
-                  flake = { };
+                  home-manager = {
+                    allowsNixosOptions = false;
+                  };
+                  flake = {
+                    allowsNixosOptions = false;
+                  };
                 };
               };
               resultModules = lib.mkOption {
