@@ -29,9 +29,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    age.secrets."andromeda.aws-home-config.credentials" = {
-      rekeyFile = "${inputs.self}/secrets/andromeda/aws-home-config/credentials.age";
-    };
+    # age.secrets."andromeda.aws-home-config.credentials" = {
+    #   rekeyFile = "${inputs.self}/secrets/andromeda/aws-home-config/credentials.age";
+    # };
 
     home.sessionVariables = {
       ROS_DOMAIN_ID = "38";
@@ -50,11 +50,11 @@ in
           };
         in
         lib.foldl (acc: filename: acc // (fileMapper filename)) { } (builtins.attrNames sshFiles)
-        // {
-          "${config.home.homeDirectory}/.aws/credentials".source =
-            config.lib.file.mkOutOfStoreSymlink
-              config.age.secrets."andromeda.aws-home-config.credentials".path;
-        }
+        # // {
+        #   "${config.home.homeDirectory}/.aws/credentials".source =
+        #     config.lib.file.mkOutOfStoreSymlink
+        #       config.age.secrets."andromeda.aws-home-config.credentials".path;
+        # }
       )
       {
         ".config/nix-vm/vm.nix" = {

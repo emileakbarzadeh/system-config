@@ -33,15 +33,15 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      age.secrets = {
-        "andromeda.aws-cache.env" = {
-          rekeyFile = "${inputs.self}/secrets/andromeda/aws-cache/env.age";
-        };
-        "andromeda.aws-experiments.key" = mkIf cfg.remoteBuilders.enable {
-          rekeyFile = "${inputs.self}/secrets/andromeda/aws-experiments/key.age";
-          mode = "400";
-        };
-      };
+      # age.secrets = {
+      #   "andromeda.aws-cache.env" = {
+      #     rekeyFile = "${inputs.self}/secrets/andromeda/aws-cache/env.age";
+      #   };
+      #   "andromeda.aws-experiments.key" = mkIf cfg.remoteBuilders.enable {
+      #     rekeyFile = "${inputs.self}/secrets/andromeda/aws-experiments/key.age";
+      #     mode = "400";
+      #   };
+      # };
 
       programs.ssh = mkIf cfg.remoteBuilders.enable {
         extraConfig = ''
@@ -50,8 +50,9 @@ in
             User root
             HostName 18.136.8.225
             Port 22
-            IdentityFile ${config.age.secrets."andromeda.aws-experiments.key".path}
         '';
+        #     IdentityFile ${config.age.secrets."andromeda.aws-experiments.key".path}
+        # '';
       };
 
       nix = mkMerge [
@@ -81,7 +82,7 @@ in
       ];
 
       systemd.services.nix-daemon.serviceConfig = {
-        EnvironmentFile = config.age.secrets."andromeda.aws-cache.env".path;
+        # EnvironmentFile = config.age.secrets."andromeda.aws-cache.env".path;
         Environment = "AWS_DEFAULT_REGION=ap-southeast-2";
       };
     })

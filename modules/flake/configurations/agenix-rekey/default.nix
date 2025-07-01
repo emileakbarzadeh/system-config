@@ -15,7 +15,7 @@
       masterIdentities = lib.mkDefault [
         {
           identity = "${inputs.self}/secrets/yubikey.hmac";
-          pubkey = "age1f0u4udt6y7qr9w74mk2d9a5g4d46qhpcuqxrljxuqe8wf00743uqm0980r";
+          pubkey = "age1v6ve5egfrccvdlp36ckjgexq034dghheknaupx2ga4mrucm7xenqc5g76d";
         }
       ];
       storageMode = lib.mkDefault "local";
