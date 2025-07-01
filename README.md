@@ -33,24 +33,12 @@
 - Shells can be found under `./shells/...`
   - Default one puts a recent `nix` together with some other useful tools for working with the repo (`deploy-rs`, `rage`, `agenix-rekey`, etc.), see [`./shells/default/default.nix`](./shells/default/default.nix) for more info
 
-# Topology
-
-You can see the overall topology of the hosts by running
-
-```sh
-nix build .#topology
-```
-
-And opening the resulting `./result/main.svg` and `./result/network.svg`
-
----
-
 # Secrets
 
 Secrets are managed by [`agenix`](https://github.com/ryantm/agenix) and [`agenix-rekey`](https://github.com/oddlama/agenix-rekey)
 
 > [!NOTE]
-> Secrets are defined by the hosts themselves, `agenix-rekey` *just* collects what secrets are referenced by them and lets you generate, edit and rekey them
+> Secrets are defined by the hosts themselves, `agenix-rekey` _just_ collects what secrets are referenced by them and lets you generate, edit and rekey them
 
 ```sh
 # To put `rage`, `agenix-rekey` and friends in `$PATH`

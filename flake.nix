@@ -1,5 +1,5 @@
 {
-  description = "corncheese's NixOS, nix-on-droid and nix-darwin configs";
+  description = "Emile's NixOS, nix-on-droid and nix-darwin configs";
 
   outputs =
     inputs:
@@ -25,12 +25,12 @@
           ./modules/flake/modules
           ./modules/flake/configurations
           ./modules/flake/agenix
-          ./modules/flake/topology
           ./modules/flake/packages
           ./modules/flake/overlays
           ./modules/flake/shells
         ];
 
+        # These get used by the modules we have imported above that do the heavy lifting
         auto = {
           # Automatic modules, see `./modules/flake/modules/default.nix`
           modules.enableAll = true;
@@ -109,11 +109,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # NixOS-WSL
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # # NixOS-WSL
+    # nixos-wsl = {
+    #   url = "github:nix-community/NixOS-WSL/main";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     mac-app-util = {
       url = "github:hraban/mac-app-util";
@@ -132,11 +132,6 @@
 
     impermanence = {
       url = "github:nix-community/impermanence";
-    };
-
-    nix-topology = {
-      url = "github:oddlama/nix-topology";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     lib-net = {
