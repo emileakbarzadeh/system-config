@@ -3,11 +3,12 @@
 final: prev: {
   lib = prev.lib // {
     maintainers = {
-      conroy-cheers = {
-        name = "Conroy Cheers";
-        email = "conroy@corncheese.org";
-        github = "conroy-cheers";
+      emile = {
+        name = "Emile";
+        email = "emile.aks@gmail.com";
+        github = "emile";
         githubId = "9310662";
+        gitSigningKey = "74B3A6C87D8F85E1";
         keys = [
           {
             # fingerprint = "8A29 0250 C775 7813 1DD1  DC57 7275 0ABE E181 26D0";
@@ -17,8 +18,10 @@ final: prev: {
     };
   };
 
+  # Alias nix command to nix-monitored
   nix-monitored = inputs.nix-monitored.packages.${prev.system}.default.override {
-    nix = prev.nix;
+    # Install lix
+    nix = inputs.lix-module;
     nix-output-monitor = prev.nix-output-monitor;
   };
 
@@ -78,8 +81,4 @@ final: prev: {
     withOpenASAR = true;
     withVencord = true;
   };
-
-  prismlauncher = prev.prismlauncher.overrideAttrs (oldAttrs: {
-    patches = (oldAttrs.patches or [ ]) ++ [ ./offline-mode-prism-launcher.diff ];
-  });
 }

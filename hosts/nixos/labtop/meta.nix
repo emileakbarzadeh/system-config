@@ -3,6 +3,8 @@
 
   pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfUubORT1oZ+j5COiJKOUi9Bq7Lvc0vWc9/oIK03w3e";
 
+  enable = false;
+
   # `deploy-rs` configuration
   deploy = {
     # This is the hostname by which you'll refer to this machine using reploy-rs

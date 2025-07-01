@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.corncheese.shell;
+  cfg = config.em.shell;
 
   inherit (lib)
     mkEnableOption
@@ -55,8 +55,8 @@ in
   imports = [ ];
 
   options = {
-    corncheese.shell = {
-      enable = mkEnableOption "corncheese shell setup";
+    em.shell = {
+      enable = mkEnableOption "Emile shell setup";
       username = mkOption {
         description = "Username to be used (for prompt)";
         type = types.str;
@@ -69,16 +69,10 @@ in
       };
       shells = mkOption {
         description = "Shells to be configured (first one is used for $SHELL)";
-        type = lib.pipe [ "nushell" "zsh" ] [ types.enum types.listOf ];
+        type = lib.pipe [ "zsh" ] [ types.enum types.listOf ];
         default = [
-          "nushell"
           "zsh"
         ];
-      };
-      starship = mkOption {
-        description = "Use starship prompt";
-        type = types.bool;
-        default = false;
       };
       p10k = mkOption {
         description = "Use powerlevel10k";
@@ -87,7 +81,7 @@ in
       };
       atuin = {
         enable = mkEnableOption "atuin history search" // {
-          default = true;
+          default = false;
         };
         sync = mkEnableOption "syncing atuin history to corncheese server";
         key = mkOption {
@@ -126,7 +120,6 @@ in
         with pkgs;
         builtins.concatLists [
           (builtins.map (lib.flip builtins.getAttr pkgs) cfg.shells)
-          (optionals cfg.starship [ starship ])
           (optionals cfg.p10k [ zsh-powerlevel10k ])
           (optionals cfg.direnv [ direnv ])
           (optionals cfg.zoxide [ zoxide ])
@@ -135,8 +128,6 @@ in
       # Direnv
       programs.direnv = mkIf cfg.direnv {
         enable = true;
-
-        enableNushellIntegration = builtins.elem "nushell" cfg.shells;
         enableZshIntegration = builtins.elem "zsh" cfg.shells;
 
         nix-direnv = {
@@ -148,7 +139,6 @@ in
       programs.atuin = mkIf cfg.atuin.enable {
         enable = true;
 
-        enableNushellIntegration = builtins.elem "nushell" cfg.shells;
         enableZshIntegration = builtins.elem "zsh" cfg.shells;
 
         daemon.enable = true;
@@ -177,15 +167,6 @@ in
         ];
       };
 
-      # Starship
-      programs.starship = mkIf cfg.starship {
-        enable = true;
-
-        package = pkgs.starship;
-
-        settings = import ./starship.nix { inherit (cfg) username; };
-      };
-
       # Zoxide
       programs.zoxide = mkIf cfg.zoxide {
         enable = true;
@@ -196,11 +177,11 @@ in
         enableZshIntegration = builtins.elem "zsh" cfg.shells;
       };
 
-      # GnuPG
-      services.gpg-agent = {
-        enableNushellIntegration = builtins.elem "nushell" cfg.shells;
-        enableZshIntegration = builtins.elem "zsh" cfg.shells;
-      };
+      # # GnuPG
+      # services.gpg-agent = {
+      #   enableNushellIntegration = builtins.elem "nushell" cfg.shells;
+      #   enableZshIntegration = builtins.elem "zsh" cfg.shells;
+      # };
 
       # Shell
       home.sessionVariables = {
@@ -210,23 +191,6 @@ in
           in
           "${shellPackage}/${shellPackage.shellPath}";
       };
-
-      # Nushell
-      programs.nushell = mkMerge [
-        (mkIf (builtins.elem "nushell" cfg.shells) {
-          enable = true;
-
-          package = pkgs.nushell;
-
-          configFile.source = ./nushell/config.nu;
-          envFile.source = ./nushell/env.nu;
-          loginFile.source = ./nushell/login.nu;
-
-          inherit shellAliases;
-
-          environmentVariables = { };
-        })
-      ];
 
       # Zsh
       home.file = {
@@ -255,11 +219,22 @@ in
           path = "${config.xdg.dataHome}/zsh/history";
         };
 
+        completionInit = ''
+          autoload -U compinit && compinit
+          zstyle ':completion:*' matcher-list "" "m:{a-zA-Z}={A-Za-z}"
+        '';
+
         initContent = builtins.concatStringsSep "\n" [
           ''
             function take() {
               mkdir -p "''${@}" && cd "''${@}"
             }
+
+            # Homebrew binaries into path
+            export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/opt/homebrew/bin"
+
+            # Rust installed with rustup
+            test -f $HOME/.cargo/env && source $HOME/.cargo/env
           ''
           (optionalString cfg.p10k ''
             source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme  
@@ -329,6 +304,6 @@ in
   ];
 
   meta = {
-    maintainers = with lib.maintainers; [ conroy-cheers ];
+    maintainers = with lib.maintainers; [ emile ];
   };
 }

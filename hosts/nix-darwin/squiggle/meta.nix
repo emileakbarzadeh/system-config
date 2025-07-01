@@ -1,5 +1,5 @@
 {
   system = "aarch64-darwin";
-  enable = true;
+  enable = false;
   hostname = "squiggle";
 }

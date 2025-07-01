@@ -3,9 +3,9 @@
 {
   base16Scheme = "catppuccin-mocha";
   # Stylix palette override.
-  stylixOverride = {
-    base00 = "11111b";
-  };
+  # stylixOverride = {
+  #   base00 = "11111b";
+  # };
 
   # Override stylix theme of btop.
   overrideBtop = true;
