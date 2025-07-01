@@ -228,8 +228,9 @@
     superfile.url = "github:yorukot/superfile";
     # stylix.url = "github:danth/stylix";
     swww.url = "github:LGFae/swww";
-    nixvim = {
-      url = "github:nix-community/nixvim";
+
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
