@@ -79,7 +79,6 @@ in
         # Feel free to uncomment for first time installation
         # "foxglove-studio"
         # "wireshark"
-        # "tailscale"
         # "syncthing"
 
         "google-chrome"

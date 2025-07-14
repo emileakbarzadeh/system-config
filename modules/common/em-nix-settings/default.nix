@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 let
@@ -15,18 +16,37 @@ in
   # };
   options = { };
 
+  imports = [
+    # inputs.lix-module.nixosModules.default
+  ];
+
   config = {
     # Allow unfree packages
     nixpkgs.config.allowUnfree = lib.mkDefault true;
 
     # enable flakes globally
     nix = lib.mkDefault {
-      settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
 
-      package = pkgs.nix;
+      # TODO doesnt work on nix-darwin, make a platform switch
+      # settings.experimental-features = [
+      #   "nix-command"
+      #   "flakes"
+      # ];
+      # TODO(em): Agenix this + seperate into seperate module in common
+      # TODO(em): Add aws config (in ~root/.aws) to nix config
+      settings = {
+        substituters = [ "s3://andromedarobotics-artifacts?region=ap-southeast-2" ];
+        trusted-public-keys = [
+          "nix-cache.dromeda.com.au-1:x4QtHKlCwaG6bVGvlzgNng+x7WgZCZc7ctrjlz6sDHg="
+        ];
+      };
+
+      extraOptions = ''
+        experimental-features = nix-command flakes
+        # extra-platforms = x86_64-darwin aarch64-darwin
+      '';
+
+      package = pkgs.nix-monitored;
 
       # do garbage collection weekly to keep disk usage low
       gc = {

@@ -22,9 +22,9 @@ in
   config = mkIf cfg.enable {
     # programs.nix-index.enable = true;
 
-    # environment.systemPackages = [
-    #   pkgs.zsh
-    # ];
+    environment.systemPackages = with pkgs; [
+      nixos-rebuild
+    ];
     environment.shells = [
       pkgs.zsh
     ];

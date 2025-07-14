@@ -123,7 +123,10 @@ in
           (optionals cfg.p10k [ zsh-powerlevel10k ])
           (optionals cfg.direnv [ direnv ])
           (optionals cfg.zoxide [ zoxide ])
-        ];
+          # TODO(em): remove system
+          # inputs.lix-module.pkgs.aarch64-darwin.lix
+        ]
+        ++ [ pkgs.nix-monitored ];
 
       # Direnv
       programs.direnv = mkIf cfg.direnv {
@@ -242,9 +245,10 @@ in
           '')
           ''
             # Prevent macOS updates from destroying nix
-            if [ -e "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ] && [ "''${SHLVL}" -eq 1 ]; then
-              source "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-            fi
+            # This makes the nix in the config not work though, rather the system default nix 
+            # if [ -e "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ] && [ "''${SHLVL}" -eq 1 ]; then
+            #   source "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+            # fi
           ''
           ''
             bindkey '^[[1;3D' backward-word  # Alt + Left
