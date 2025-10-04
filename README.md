@@ -52,6 +52,14 @@ nix develop
 agenix edit
 ```
 
+For example, to create a new key with the yubikey,
+
+```sh
+agenix edit andromeda/git/newkey.age
+```
+
+When making a new key, don't forget to reference it in `secrets.nix` as well as the usual steps [found here](https://github.com/oddlama/agenix-rekey)
+
 ## Rekey all secrets
 
 ```sh

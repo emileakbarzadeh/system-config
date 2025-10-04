@@ -36,6 +36,7 @@ let
 in
 {
   "andromeda/test/test.age".publicKeys = users;
+  "andromeda/git/gpg.age".publicKeys = users;
   # "andromeda/aws-experiments/key.age".publicKeys = users ++ [
   #   kombu_system
   #   brick_system
