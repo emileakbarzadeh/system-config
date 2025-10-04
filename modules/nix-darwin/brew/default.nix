@@ -41,7 +41,6 @@ in
         lockfiles = false; # Don't save lockfile (since running from anywhere)
       };
       taps = [
-        "homebrew/services"
         "leoafarias/fvm"
         "probe-rs/probe-rs"
       ];
@@ -103,8 +102,10 @@ in
 
         "stats" # beautiful system monitor
 
-        # Development
-        "insomnia" # REST client
+        # # Development
+        # "insomnia" # REST client
+
+        "ghostty"
       ];
       extraConfig = ''
         # brew "xorpse/formulae/brew", args: ["HEAD"]

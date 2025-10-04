@@ -126,7 +126,7 @@ in
             "/System/Applications/Launchpad.app"
             "/Applications/Safari.app"
             "/Applications/Google Chrome.app"
-            "/System/Applications/Utilities/Terminal.app"
+            "/Applications/Ghostty.app"
             "${pkgs.vscode}/Applications/Visual Studio Code.app"
             "/System/Applications/Messages.app"
             "/System/Applications/Music.app"
@@ -136,7 +136,8 @@ in
             "/System/Applications/App Store.app"
             "/System/Applications/System Settings.app"
             "/Applications/Slack.app"
-            "/System/Applications/iPhone Mirroring.app"
+            "/System/Applications/Passwords.app"
+
           ];
           # persistent-others = [ "/Users/${config.system.primaryUser}/Downloads" ];
 
