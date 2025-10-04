@@ -12,7 +12,7 @@ let
   yubikey = "age1v6ve5egfrccvdlp36ckjgexq034dghheknaupx2ga4mrucm7xenqc5g76d"; # yubikey FIDO2
 
   emilesMacBookAir = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJFavq4XR8mBk6lVUuori2tlnnEb2AQkyns/H8lgNoU5 emile@EmilesMacBookAir";
-  emilesMacBookPro = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDU5KdbGzMPf1R7YOyl7D/zY6UeuCFASsrX20HkGgrLRY9rBC7padJagOu1GMmd/9Bc6ZB30L/7UE/jpO345YRZlLWGsdQFcAxgGvEACixxSpUDcMUmlfmQuAmG/kWcM5LUt301iMgC+GSdiydETbJKKOnIxxz0+/wZoQB031dz7T+VvTzcoxgbNvu2GGkYZSOUyf2u9Xkj3v81/Qfc2IAbqGNWOVl/8HHWf+oyFPFJhoAd0K+tMFlxcBYe15xQsjGFA6i8fbFor3FsynY0vEn3GVWvcsErKWBHbRmLh1tHNVRc3YVewk6yM8SBiszUNQQmrMDpSI123OPOgLTbWrTh57tqPS1evHluC13GvbsMHpmizZDPcaLsOqsX9cWvLdBzLt5MrlHi3BVO58tbD4UJt4scRYqYH7yCrUKOwg/hIeOo7uvZK6pjzqSmip+mBzc1STlPoa9CNlXMydZvxr/stYWsOJohkZMbRNYl22AiJXxktFeeDJVS3yHGdKhLZr0= conroy@squiggle";
+  emilesMacBookPro = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA+tw0LZgDKhWqFQY94C5LGOTg1jiCSb6pqDy1TPkX3n emile@EmilesMacBookPro";
 
   users = [
     yubikey

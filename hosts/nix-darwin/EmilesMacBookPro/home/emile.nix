@@ -25,7 +25,7 @@
       programs.home-manager.enable = true;
 
       age.rekey = {
-        hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJFavq4XR8mBk6lVUuori2tlnnEb2AQkyns/H8lgNoU5 emile@EmilesMacBookAir";
+        hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA+tw0LZgDKhWqFQY94C5LGOTg1jiCSb6pqDy1TPkX3n emile@EmilesMacBookPro";
       };
 
       # age.secrets."test.key".rekeyFile = "${inputs.self}/secrets/test/test.age";
